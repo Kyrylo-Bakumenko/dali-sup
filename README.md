@@ -2,7 +2,7 @@
 
 *Front End Starter pack using Vite and npm/nvm*
 
-[deployed url](http://url-if-deployed-here](https://frontend-starterpack-kyrylo-bakumenko.onrender.com/)
+[deployed url](https://frontend-starterpack-kyrylo-bakumenko.onrender.com/)
 
 ## What Worked Well
 Overall, following the directions for installing vite, as well as all the config files was straightforward. Applying some basic styling to the page was almost automatic as well.
