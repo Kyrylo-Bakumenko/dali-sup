@@ -25,7 +25,13 @@
     "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "axios": "^1.6.8",
     "jquery": "^3.7.1",
+    "lodash.debounce": "^4.0.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.22.3",
     "vite-plugin-favicons-inject": "^2.2.0"
   }
 }
