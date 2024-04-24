@@ -12,6 +12,7 @@ function NoteList() {
         id: uuidv4(), // Generate a unique id using uuidv4(), copilot
         title: input,
         text: '',
+        position: { x: 0, y: 0, z: 0 }, // intializes position
       };
       setNotes([...notes, newNote]);
       setInput('');
@@ -24,6 +25,17 @@ function NoteList() {
 
   const updateNote = (id, updatedFields) => {
     setNotes(notes.map((note) => (note.id === id ? { ...note, ...updatedFields } : note)));
+  };
+
+  const handleStartDrag = (id) => {
+    const maxZIndex = Math.max(...notes.map((note) => note.position.z), 0) + 1;
+    setNotes(notes.map((note) => {
+      if (note.id === id) {
+        return { ...note, position: { ...note.position, z: maxZIndex } };
+      } else {
+        return { ...note, position: { ...note.position, z: Math.max(note.position.z - 1, 0) } };
+      }
+    }));
   };
 
   return (
@@ -40,6 +52,7 @@ function NoteList() {
           note={note}
           deleteNote={deleteNote}
           updateNote={updateNote}
+          handleStartDrag={handleStartDrag}
         />
       ))}
     </div>
