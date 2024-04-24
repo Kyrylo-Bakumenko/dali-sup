@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
 import Draggable from 'react-draggable';
+import ReactMarkdown from 'react-markdown';
 
 function Note({
-  note, deleteNote, updateNote, handleStartDrag,
+  noteId, note, deleteNote, updateNote, handleStartDrag,
 }) {
   const [isEditing, setEditing] = useState(false);
   const [title, setTitle] = useState(note.title);
   const [text, setText] = useState(note.text);
-  const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
 
+  // Handle stop dragging and update the note's position in Firebase
   const handleStopDrag = (e, data) => {
-    setPosition({ x: data.x, y: data.y });
-    updateNote(note.id, { ...note, position: { x: data.x, y: data.y, z: note.position.z } });
+    const newPos = { x: data.x, y: data.y, z: note.position.z };
+    updateNote(noteId, { ...note, position: newPos });
   };
 
+  // Handle save and update the note's title and text in Firebase
   const handleSave = () => {
-    updateNote(note.id, { title, text });
+    updateNote(noteId, { title, text });
     setEditing(false);
   };
 
   return (
     <Draggable
       handle=".handle"
-      defaultPosition={position}
-      position={position}
-      onStart={() => handleStartDrag(note.id)} // Moved from direct call during render to an event handler
+      // grid={[25, 25]} // snapping to grid pixels
+      defaultPosition={{ x: note.position.x, y: note.position.y }}
+      position={{ x: note.position.x, y: note.position.y }}
+      onStart={() => handleStartDrag(noteId)}
       onStop={handleStopDrag}
     >
       <div className="note" style={{ position: 'absolute', zIndex: note.position.z }}>
@@ -42,13 +45,13 @@ function Note({
         ) : (
           <div>
             <div className="handle">
-              <h4 className="note-title" onClick={() => setEditing(true)}>{note.title}</h4>
+              <h4 className="note-title">{title}</h4>
               <div className="control-buttons">
                 <button type="button" onClick={() => setEditing(true)}>Edit</button>
-                <button type="button" onClick={() => deleteNote(note.id)}>Delete</button>
+                <button type="button" onClick={() => deleteNote(noteId)}>Delete</button>
               </div>
             </div>
-            <p className="content" onClick={() => setEditing(true)}>{note.text}</p>
+            <ReactMarkdown className="content">{text}</ReactMarkdown>
           </div>
         )}
       </div>

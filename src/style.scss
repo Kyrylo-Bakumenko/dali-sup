@@ -1,6 +1,80 @@
-$fontcolor:  rgb(10%, 10%, 10%);
-$backgroundcolor: rgb(98%, 98%, 98%);
+// $fontcolor:  rgb(10%, 10%, 10%);
+// $backgroundcolor: rgb(98%, 98%, 98%);
 
+
+// body {
+//   font-family: "Roboto", sans-serif;
+//   color: $fontcolor;
+//   background-color: $backgroundcolor;
+//   margin: 50px;
+// }
+
+// p, h4 {
+//   margin: 0;
+// }
+
+// button {
+//   background-color: rgb(215, 215, 239);
+//   border-radius: 5px;
+//   border-color: rgb(49, 37, 47);
+//   cursor: pointer;
+
+// }
+
+// .note {
+//   // appearence styling
+//   background-color: white;
+//   border-radius: 5px;
+//   padding: 10px;
+//   margin: 10px;
+//   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+
+//   // layout styling
+//   display: flex;
+//   flex-direction: column;
+
+// }
+
+// .note-title {
+//   font-size: 1.5rem;
+//   font-weight: bold;
+//   margin-right: 3rem;
+// }
+
+// .handle {
+//   // appearence styling
+//   background-color: rgb(215, 215, 239);
+//   border-radius: 5px;
+//   border-color: bisque;
+//   cursor: grab;
+//   min-height: 20px;
+//   min-width: 200px;
+//   padding: .5rem;
+
+//   // layout styling
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
+
+// .control-buttons {
+//   display: flex;
+//   justify-content: center;
+// }
+
+// .content {
+//   background-color: blueviolet;
+//   min-height: 100px;
+//   min-width: 100px;
+//   width: 100%;
+//   border-radius: 5px;
+  
+//   // layout styling
+//   margin-top: .5rem;
+//   padding: 10px;
+// }
+$fontcolor: rgb(90%, 90%, 90%);  // Light gray for dark mode readability
+$backgroundcolor: rgb(15%, 15%, 15%);  // Very dark gray for background
 
 body {
   font-family: "Roboto", sans-serif;
@@ -13,48 +87,54 @@ p, h4 {
   margin: 0;
 }
 
-button {
-  background-color: rgb(215, 215, 239);
+input[type="text"] {
+  background-color: rgb(28%, 28%, 28%);
+  border: 2px solid rgb(90%, 90%, 90%);
+  color: $fontcolor;
+  padding: 8px;
   border-radius: 5px;
-  border-color: rgb(49, 37, 47);
-  cursor: pointer;
+  margin-right: 10px;  // Space between the input and the button
+  width: calc(100% - 120px);  // Adjust width to fit with button
+}
 
+button {
+  background-color: rgb(40, 40, 60);
+  color: $fontcolor;
+  border: 2px solid rgb(90%, 90%, 90%);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 8px 12px;
 }
 
 .note {
-  // appearence styling
-  background-color: white;
+  background-color: rgb(28%, 28%, 28%);
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-
-  // layout styling
-  display: flex;
-  flex-direction: column;
-
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .note-title {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-right: 2rem;
+  margin-right: 3rem;
 }
 
 .handle {
-  // appearence styling
-  background-color: rgb(215, 215, 239);
+  background-color: rgb(35%, 35%, 35%);
+  color: $fontcolor;
   border-radius: 5px;
-  border-color: bisque;
   cursor: grab;
   min-height: 20px;
   min-width: 200px;
   padding: .5rem;
-
-  // layout styling
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.add-note-button {
+margin-left: .5rem;
 }
 
 .control-buttons {
@@ -63,13 +143,13 @@ button {
 }
 
 .content {
-  background-color: blueviolet;
+  background-color: rgb(25%, 25%, 25%);
+  color: $fontcolor;
   min-height: 100px;
   min-width: 100px;
   width: 100%;
   border-radius: 5px;
-  
-  // layout styling
+  padding: 10px;
+  overflow-y: auto;
   margin-top: .5rem;
-  padding: .5rem;
 }

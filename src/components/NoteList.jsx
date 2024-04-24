@@ -1,41 +1,32 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid'; // Import the uuid library
+import React, { useState, useEffect } from 'react';
 import Note from './Note';
+import {
+  onNotesValueChange, addNote, deleteNote, updateNote, handleStartDrag,
+} from './datastore';
 
 function NoteList() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState({}); // Assuming notes is initially an object
   const [input, setInput] = useState('');
 
-  const addNote = () => {
-    if (input.trim()) {
+  useEffect(() => {
+    const unsubscribe = onNotesValueChange((newNotes) => {
+      console.log('New notes received:', newNotes);
+      setNotes(newNotes || {}); // Ensure it remains an object
+    });
+
+    return () => unsubscribe(); // Clean up the listener
+  }, []);
+
+  const handleSubmit = (title) => {
+    if (title.trim()) {
       const newNote = {
-        id: uuidv4(), // Generate a unique id using uuidv4(), copilot
-        title: input,
+        title,
         text: '',
-        position: { x: 0, y: 0, z: 0 }, // intializes position
+        position: { x: 0, y: 0, z: 0 },
       };
-      setNotes([...notes, newNote]);
+      addNote(newNote);
       setInput('');
     }
-  };
-
-  const deleteNote = (id) => {
-    setNotes(notes.filter((note) => note.id !== id));
-  };
-
-  const updateNote = (id, updatedFields) => {
-    setNotes(notes.map((note) => (note.id === id ? { ...note, ...updatedFields } : note)));
-  };
-
-  const handleStartDrag = (id) => {
-    const maxZIndex = Math.max(...notes.map((note) => note.position.z), 0) + 1;
-    setNotes(notes.map((note) => {
-      if (note.id === id) {
-        return { ...note, position: { ...note.position, z: maxZIndex } };
-      } else {
-        return { ...note, position: { ...note.position, z: Math.max(note.position.z - 1, 0) } };
-      }
-    }));
   };
 
   return (
@@ -45,10 +36,11 @@ function NoteList() {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Enter note title..."
       />
-      <button type="button" onClick={addNote}>Add Note</button>
-      {notes.map((note) => (
+      <button type="button" className="add-note-button" onClick={() => handleSubmit(input)}>Add Note</button>
+      {Object.entries(notes).map(([id, note]) => (
         <Note
-          key={note.id}
+          key={id}
+          noteId={id}
           note={note}
           deleteNote={deleteNote}
           updateNote={updateNote}
