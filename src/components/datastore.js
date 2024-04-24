@@ -1,6 +1,5 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
-// import { v4 as uuidv4 } from 'uuid'; // Import the uuid library
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBKVhwDmRrSiPvtGwdEe-j2eKOSGrFIp4U',
@@ -16,14 +15,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
-
-// export const onNotesValueChange = (callback) => {
-//   database().ref('notes').on('value', (snapshot) => {
-//     const notes = snapshot.val();
-//     console.log('Notes value changed:', notes);
-//     callback(notes);
-//   });
-// };
 
 export const onNotesValueChange = (callback) => {
   const notesRef = database.ref('notes');
@@ -55,12 +46,11 @@ export const deleteNote = (id) => {
 export const handleStartDrag = (currentNoteId) => {
   const notesRef = database.ref('notes');
 
-  // First, get all notes to calculate the maximum zIndex.
   notesRef.once('value', (snapshot) => {
     const notes = snapshot.val();
     let maxZIndex = 0;
 
-    // Calculate the maximum zIndex
+    // calculate the maximum zIndex
     Object.keys(notes).forEach((key) => {
       const zIndex = notes[key].position && notes[key].position.z;
       if (zIndex > maxZIndex) {
@@ -68,22 +58,18 @@ export const handleStartDrag = (currentNoteId) => {
       }
     });
 
-    maxZIndex += 1; // Increment to ensure the current dragged note is on top.
+    maxZIndex += 1;
 
-    // Create updates for the zIndex: set the current note to max and decrease others if needed.
     const updates = {};
     Object.keys(notes).forEach((key) => {
       if (key === currentNoteId) {
-        // Set the max zIndex for the current dragged note.
         updates[`${key}/position/z`] = maxZIndex;
       } else {
-        // Optionally decrement zIndex for other notes to maintain the stack order.
         const newZIndex = notes[key].position.z > 0 ? notes[key].position.z - 1 : 0;
         updates[`${key}/position/z`] = newZIndex;
       }
     });
 
-    // Update all in a single batch
     notesRef.update(updates, (error) => {
       if (error) {
         console.error('Failed to update zIndex on drag:', error);

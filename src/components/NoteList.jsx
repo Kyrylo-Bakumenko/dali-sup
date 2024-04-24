@@ -5,16 +5,14 @@ import {
 } from './datastore';
 
 function NoteList() {
-  const [notes, setNotes] = useState({}); // Assuming notes is initially an object
+  const [notes, setNotes] = useState({});
   const [input, setInput] = useState('');
 
   useEffect(() => {
-    const unsubscribe = onNotesValueChange((newNotes) => {
+    onNotesValueChange((newNotes) => {
       console.log('New notes received:', newNotes);
-      setNotes(newNotes || {}); // Ensure it remains an object
+      setNotes(newNotes || {});
     });
-
-    return () => unsubscribe(); // Clean up the listener
   }, []);
 
   const handleSubmit = (title) => {

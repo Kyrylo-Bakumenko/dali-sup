@@ -9,13 +9,11 @@ function Note({
   const [title, setTitle] = useState(note.title);
   const [text, setText] = useState(note.text);
 
-  // Handle stop dragging and update the note's position in Firebase
   const handleStopDrag = (e, data) => {
     const newPos = { x: data.x, y: data.y, z: note.position.z };
     updateNote(noteId, { ...note, position: newPos });
   };
 
-  // Handle save and update the note's title and text in Firebase
   const handleSave = () => {
     updateNote(noteId, { title, text });
     setEditing(false);
@@ -24,7 +22,7 @@ function Note({
   return (
     <Draggable
       handle=".handle"
-      // grid={[25, 25]} // snapping to grid pixels
+      grid={[25, 25]} // snapping to grid pixels
       defaultPosition={{ x: note.position.x, y: note.position.y }}
       position={{ x: note.position.x, y: note.position.y }}
       onStart={() => handleStartDrag(noteId)}
@@ -48,7 +46,9 @@ function Note({
               <h4 className="note-title">{title}</h4>
               <div className="control-buttons">
                 <button type="button" onClick={() => setEditing(true)}>Edit</button>
-                <button type="button" onClick={() => deleteNote(noteId)}>Delete</button>
+                <button type="button" onClick={() => deleteNote(noteId)}> {/* eslint-disable-line react/jsx-no-bind */}
+                  <i className="fa fa-trash" aria-hidden="true" style={{ cursor: 'pointer' }} />
+                </button>
               </div>
             </div>
             <ReactMarkdown className="content">{text}</ReactMarkdown>
