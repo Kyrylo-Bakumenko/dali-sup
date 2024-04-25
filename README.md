@@ -2,7 +2,7 @@
 
 This lab covers using an external database to allow for multiple users to simultaneously connect, create, modify, and edit notes.
 
-[deployed url](http://url-if-deployed-here)
+[deployed url](https://lab3-react-notes-kyrylo-bakumenko.onrender.com/)
 
 ## What Worked Well
 
